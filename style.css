@@ -227,7 +227,9 @@ main {
 .post-body ul, .post-body ol { margin: 0 0 1rem 1.5rem; }
 .post-body li { margin-bottom: 0.35rem; color: #1e293b; }
 
-.post-body pre {
+/* Jekyll wraps fenced code in div.highlight > pre.highlight > code */
+.post-body pre,
+.post-body .highlight pre {
   background: #0f172a;
   color: #e2e8f0;
   padding: 1.1rem 1.4rem;
@@ -238,6 +240,19 @@ main {
   line-height: 1.65;
   border: 1px solid #1e293b;
 }
+
+.post-body .highlight { margin: 1.25rem 0; }
+.post-body .highlight pre { margin: 0; }
+
+/* Rouge token colours (dark theme) */
+.highlight .c, .highlight .cm, .highlight .c1 { color: #64748b; }   /* comments */
+.highlight .k, .highlight .kd, .highlight .kn { color: #93c5fd; }   /* keywords */
+.highlight .s, .highlight .s1, .highlight .s2 { color: #86efac; }   /* strings */
+.highlight .mi, .highlight .mf               { color: #fca5a5; }   /* numbers */
+.highlight .nb                               { color: #c4b5fd; }   /* builtins */
+.highlight .nf                               { color: #67e8f9; }   /* functions */
+.highlight .o                                { color: #94a3b8; }   /* operators */
+.highlight .na, .highlight .nx              { color: #e2e8f0; }   /* names */
 
 .post-body code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
 

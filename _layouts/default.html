@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <div class="site-brand">
+    <a class="site-title" href="/">{{ site.title }}</a>
+    <span class="site-tagline">{{ site.description }}</span>
+  </div>
+  <nav>
+    <a href="/" {% if page.url == "/" %}class="active"{% endif %}>Posts</a>
+    <a href="/tags.html" {% if page.url == "/tags.html" %}class="active"{% endif %}>Tags</a>
+    <a href="/about.html" {% if page.url == "/about.html" %}class="active"{% endif %}>About</a>
+  </nav>
+</header>
+
+{{ content }}
+
+<footer>
+  &copy; {{ site.time | date: "%Y" }} {{ site.author }} &mdash; Built with Jekyll &amp; GitHub Pages
+</footer>
+
+</body>
+</html>

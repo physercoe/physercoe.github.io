@@ -1,115 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tags — Physercoe's Blog</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+---
+layout: default
+title: Tags
+---
 
-<header>
-  <div class="site-brand">
-    <a class="site-title" href="/">Physercoe's Blog</a>
-    <span class="site-tagline">Dev notes &amp; explorations</span>
-  </div>
-  <nav>
-    <a href="/">Posts</a>
-    <a href="tags.html" class="active">Tags</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+{% assign all_tags = "" | split: "" %}
+{% for post in site.posts %}
+  {% assign all_tags = all_tags | concat: post.tags %}
+{% endfor %}
+{% assign all_tags = all_tags | uniq | sort %}
 
 <main>
   <p class="section-heading">Browse by tag</p>
 
-  <div id="python" class="tag-group">
+  {% for tag in all_tags %}
+  {% assign tag_posts = site.posts | where_exp: "post", "post.tags contains tag" %}
+  <div id="{{ tag | slugify }}" class="tag-group">
     <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#python">python</a></h2>
-      <span class="tag-count-badge">1</span>
+      <h2><a class="tag" href="/tags.html#{{ tag | slugify }}">{{ tag }}</a></h2>
+      <span class="tag-count-badge">{{ tag_posts | size }}</span>
     </div>
     <ul class="tag-post-list">
+      {% for post in tag_posts %}
       <li class="tag-post-item">
-        <a href="posts/python-uv.html">uv: The Python Package Manager Worth Switching To</a>
-        <span class="date">March 6, 2026</span>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <span class="date">{{ post.date | date: "%B %-d, %Y" }}</span>
       </li>
+      {% endfor %}
     </ul>
   </div>
-
-  <div id="github" class="tag-group">
-    <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#github">github</a></h2>
-      <span class="tag-count-badge">1</span>
-    </div>
-    <ul class="tag-post-list">
-      <li class="tag-post-item">
-        <a href="posts/hello-world.html">Hello, World — Getting Started with GitHub Pages</a>
-        <span class="date">March 5, 2026</span>
-      </li>
-    </ul>
-  </div>
-
-  <div id="devops" class="tag-group">
-    <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#devops">devops</a></h2>
-      <span class="tag-count-badge">1</span>
-    </div>
-    <ul class="tag-post-list">
-      <li class="tag-post-item">
-        <a href="posts/hello-world.html">Hello, World — Getting Started with GitHub Pages</a>
-        <span class="date">March 5, 2026</span>
-      </li>
-    </ul>
-  </div>
-
-  <div id="linux" class="tag-group">
-    <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#linux">linux</a></h2>
-      <span class="tag-count-badge">1</span>
-    </div>
-    <ul class="tag-post-list">
-      <li class="tag-post-item">
-        <a href="posts/dev-environment.html">Setting Up a Linux Dev Environment for Claude Code</a>
-        <span class="date">March 4, 2026</span>
-      </li>
-    </ul>
-  </div>
-
-  <div id="tooling" class="tag-group">
-    <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#tooling">tooling</a></h2>
-      <span class="tag-count-badge">2</span>
-    </div>
-    <ul class="tag-post-list">
-      <li class="tag-post-item">
-        <a href="posts/python-uv.html">uv: The Python Package Manager Worth Switching To</a>
-        <span class="date">March 6, 2026</span>
-      </li>
-      <li class="tag-post-item">
-        <a href="posts/dev-environment.html">Setting Up a Linux Dev Environment for Claude Code</a>
-        <span class="date">March 4, 2026</span>
-      </li>
-    </ul>
-  </div>
-
-  <div id="claude-code" class="tag-group">
-    <div class="tag-group-header">
-      <h2><a class="tag" href="tags.html#claude-code">claude-code</a></h2>
-      <span class="tag-count-badge">1</span>
-    </div>
-    <ul class="tag-post-list">
-      <li class="tag-post-item">
-        <a href="posts/dev-environment.html">Setting Up a Linux Dev Environment for Claude Code</a>
-        <span class="date">March 4, 2026</span>
-      </li>
-    </ul>
-  </div>
+  {% endfor %}
 
 </main>
-
-<footer>
-  &copy; 2026 Physercoe &mdash; Built with plain HTML &amp; CSS
-</footer>
-
-</body>
-</html>

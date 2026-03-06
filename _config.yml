@@ -1,0 +1,19 @@
+title: "Physercoe's Blog"
+description: "Dev notes & explorations"
+url: "https://physercoe.github.io"
+baseurl: ""
+author: "Physercoe"
+
+permalink: /posts/:slug/
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+exclude:
+  - README.md
