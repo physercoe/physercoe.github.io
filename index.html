@@ -9,43 +9,101 @@
 <body>
 
 <header>
-  <a class="site-title" href="/">Physercoe's Blog</a>
+  <div class="site-brand">
+    <a class="site-title" href="/">Physercoe's Blog</a>
+    <span class="site-tagline">Dev notes &amp; explorations</span>
+  </div>
   <nav>
-    <a href="/">Posts</a>
+    <a href="/" class="active">Posts</a>
+    <a href="tags.html">Tags</a>
     <a href="about.html">About</a>
   </nav>
 </header>
 
 <main>
-  <ul class="post-list">
+  <p class="section-heading">All posts</p>
 
-    <li class="post-card">
-      <div class="meta">March 5, 2026</div>
+  <!-- Tag filter bar -->
+  <div class="tag-filter" id="tagFilter">
+    <button class="filter-btn active" data-tag="all">All <span class="count">2</span></button>
+    <button class="filter-btn" data-tag="github">github <span class="count">1</span></button>
+    <button class="filter-btn" data-tag="devops">devops <span class="count">1</span></button>
+    <button class="filter-btn" data-tag="linux">linux <span class="count">1</span></button>
+    <button class="filter-btn" data-tag="tooling">tooling <span class="count">1</span></button>
+    <button class="filter-btn" data-tag="claude-code">claude-code <span class="count">1</span></button>
+  </div>
+
+  <ul class="post-list" id="postList">
+
+    <li class="post-card" data-tags="github devops">
+      <div class="meta">
+        <span>March 5, 2026</span>
+        <span class="dot">&middot;</span>
+        <span>3 min read</span>
+      </div>
       <h2><a href="posts/hello-world.html">Hello, World — Getting Started with GitHub Pages</a></h2>
-      <p>A quick walkthrough of how this blog was set up using plain HTML and CSS, pushed via GitHub CLI from a dev machine.</p>
+      <p class="excerpt">A quick walkthrough of how this blog was set up using plain HTML and CSS, pushed via GitHub CLI from a dev machine.</p>
       <div class="tags">
-        <span class="tag">github</span>
-        <span class="tag">devops</span>
+        <a class="tag" href="tags.html#github">github</a>
+        <a class="tag" href="tags.html#devops">devops</a>
       </div>
     </li>
 
-    <li class="post-card">
-      <div class="meta">March 4, 2026</div>
+    <li class="post-card" data-tags="linux tooling claude-code">
+      <div class="meta">
+        <span>March 4, 2026</span>
+        <span class="dot">&middot;</span>
+        <span>5 min read</span>
+      </div>
       <h2><a href="posts/dev-environment.html">Setting Up a Linux Dev Environment for Claude Code</a></h2>
-      <p>Notes on configuring an AWS EC2 Ubuntu 22.04 instance — packages, Node.js, Python tools, and GitHub CLI authentication.</p>
+      <p class="excerpt">Notes on configuring an AWS EC2 Ubuntu 22.04 instance — packages, Node.js, Python tools, and GitHub CLI authentication.</p>
       <div class="tags">
-        <span class="tag">linux</span>
-        <span class="tag">tooling</span>
-        <span class="tag">claude-code</span>
+        <a class="tag" href="tags.html#linux">linux</a>
+        <a class="tag" href="tags.html#tooling">tooling</a>
+        <a class="tag" href="tags.html#claude-code">claude-code</a>
       </div>
     </li>
 
   </ul>
+  <p class="no-results" id="noResults">No posts found for this tag.</p>
 </main>
 
 <footer>
   &copy; 2026 Physercoe &mdash; Built with plain HTML &amp; CSS
 </footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const posts = document.querySelectorAll('.post-card');
+  const noResults = document.getElementById('noResults');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag;
+
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      let visible = 0;
+      posts.forEach(post => {
+        const tags = post.dataset.tags.split(' ');
+        const show = tag === 'all' || tags.includes(tag);
+        post.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+
+      noResults.classList.toggle('visible', visible === 0);
+    });
+  });
+
+  // Make entire card clickable
+  document.querySelectorAll('.post-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.tagName === 'A') return;
+      card.querySelector('h2 a').click();
+    });
+  });
+</script>
 
 </body>
 </html>
